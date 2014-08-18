@@ -42,6 +42,10 @@ module Librarian
             dependencies.merge spec.dependencies
           end
 
+          unless parsed_metadata['dependencies']
+            raise Error, "#{name} has naither Modulefile/metadata.json file."
+          end
+
           parsed_metadata['dependencies'].each do |d|
             gem_requirement = Requirement.new(d['version_requirement']).gem_requirement
             new_dependency = Dependency.new(d['name'], gem_requirement, forge_source)
